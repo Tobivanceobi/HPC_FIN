@@ -11,10 +11,9 @@ def load_object(fname):
 
 
 def save_object(obj, fname):
-    os.makedirs(os.path.dirname(fname), exist_ok=True)
+    os.makedirs(os.path.dirname(fname + ".pickle"), exist_ok=True)
     try:
         with open(fname + ".pickle", "wb") as f:
             pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
     except Exception as ex:
         print("Error during pickling object (Possibly unsupported):", ex)
-        

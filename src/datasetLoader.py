@@ -8,15 +8,15 @@ from src.helper.pickleLoader import save_object, load_object
 
 
 class DatasetLoader:
-    TARGET_PATH = r'/content/drive/MyDrive/FIN/train_subjects.csv'
-    DATA_PATH = r'/content/drive/MyDrive/FIN/eeg_training/'
-    CACHE_PATH = r'/content/drive/MyDrive/FIN/brainage/'
+    TARGET_PATH = r'/home/modelrep/sadiya/tobias_ettling/data/train_subjects.csv'
+    DATA_PATH = r'/home/modelrep/sadiya/tobias_ettling/data/training/'
+    CACHE_PATH = r'/home/modelrep/sadiya/tobias_ettling/data/cache/'
     FREQ_BANDS = {
-        'delta': [0.2, 4],
+        'delta': [0.5, 4],
         'theta': [4, 8],
         'alpha': [8, 14],
         'beta': [14, 30],
-        'whole_spec': [0.2, 30]
+        'whole_spec': [0.5, 30]
     }
 
     def __init__(

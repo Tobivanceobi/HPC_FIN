@@ -14,5 +14,5 @@
 #rm err/*; rm out/*; rm -r runs/*;
 
 source $HOME/tobias_ettling/HPC-FIN/venv/bin/activate
-python3 tobias_ettling/slurm_test.py $SLURM_ARRAY_TASK_ID
+python3 tobias_ettling/slurm_test.py $SLURM_ARRAY_TASK_ID $SLURM_NNODES
 deactivate
