@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --partition=gpu
-#SBATCH --nodes=2
-#SBATCH --ntasks=2
+#SBATCH --nodes=10
+#SBATCH --ntasks=10
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=2000
+#SBATCH --mem-per-cpu=4000
 #SBATCH --time=00:10:00
 #SBATCH --array=0-2
 #SBATCH --mail-type=FAIL
