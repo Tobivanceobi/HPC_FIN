@@ -60,7 +60,7 @@ train_data = Data(x_train, y_train, device)
 test_data = Data(x_test, y_test, device)
 
 # Create a file to save our model scores with their parameters.
-dir_path = r"results/"
+dir_path = r"/home/modelrep/sadiya/tobias_ettling/data/results/"
 res_path = dir_path + f'hpt_{pid}.csv'
 
 # Check to avoid overwrite
@@ -71,7 +71,7 @@ if not (os.path.isfile(res_path)):
                  'activation', 'optimizer', 'early stopping'])
     df.to_csv(res_path)
 
-hp_space = load_object('./hpt_space')
+hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hpt_space')
 
 for i in range(0, len(hp_space)):
     if i % num_nodes == pid:
