@@ -36,6 +36,9 @@ print(f'Using device: {device}')
 if torch.cuda.is_available():
     num_gpus = torch.cuda.device_count()
     print(f"Number of available GPUs: {num_gpus}")
+    cuda = torch.device('cuda')  # Default CUDA device
+    cuda0 = torch.device('cuda:0')
+    cuda2 = torch.device('cuda:2')
 
     # Print GPU IDs
     for gpu_id in range(num_gpus):
