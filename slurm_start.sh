@@ -11,8 +11,8 @@
 #SBATCH --error err/error_%a.txt
 
 # Remove previous results
-rm err/*; rm out/*; rm -r runs/*;
-mkdir out/jobs
+# rm err/*; rm out/*; rm -r runs/*;
+
 source $HOME/miniconda/etc/profile.d/conda.sh
 conda init bash
 conda activate pytorch
