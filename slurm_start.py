@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 
@@ -17,6 +18,7 @@ from src.network.utiles import Data, EarlyStopping
 # Writer will output to ./runs/ directory by default
 writer = SummaryWriter()
 
+
 print(sys.argv[0])
 print('-----------------')
 print(sys.argv[1])
@@ -24,20 +26,19 @@ print(sys.argv[1])
 run = int(sys.argv[1])
 num_nodes = int(sys.argv[2])
 pid = int(sys.argv[1])
-
+logging.basicConfig(filename=f'out/jobs/job{pid}.log', level=logging.INFO)
 # setting device on GPU if available, else CPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print('Using device:', device)
-print()
+logging.info(f"Job {pid} started...")
+logging.info(f'Using device: {device}')
 
 # Additional Info when using cuda
 if device.type == 'cuda':
-    print(torch.cuda.get_device_name(0))
-    print('Memory Usage:')
-    print('Allocated:', round(torch.cuda.memory_allocated(0) / 1024 ** 3, 1), 'GB')
-    print('Cached:   ', round(torch.cuda.memory_reserved(0) / 1024 ** 3, 1), 'GB')
+    logging.info(f'Device name: {torch.cuda.get_device_name(0)}')
+    logging.info(f'Memory Usage: Allocated - {round(torch.cuda.memory_allocated(0) / 1024 ** 3, 1)} GB |'
+                 f' Cached - {round(torch.cuda.memory_reserved(0) / 1024 ** 3, 1)} GB')
 else:
-    print('Using CPU :(')
+    logging.info(f'Using CPU: {device}')
 
 fb = ['delta', 'theta', 'alpha', 'beta', 'whole_spec']
 md = ['delta_quantile', 'theta_quantile', 'alpha_quantile', 'beta_quantile', 'whole_spec_quantile']
@@ -62,7 +63,7 @@ train_data = Data(x_train, y_train, device)
 test_data = Data(x_test, y_test, device)
 
 # Create a file to save our model scores with their parameters.
-dir_path = r"/home/modelrep/sadiya/tobias_ettling/data/results/"
+dir_path = r"/home/modelrep/sadiya/tobias_ettling/HPC_FIN/results/"
 res_path = dir_path + f'hpt_{pid}.csv'
 
 # Check to avoid overwrite
@@ -73,7 +74,7 @@ if not (os.path.isfile(res_path)):
                  'activation', 'optimizer', 'early stopping'])
     df.to_csv(res_path)
 
-hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hpt_space')
+hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hptSpace')
 
 for i in range(0, len(hp_space)):
     if i % num_nodes == pid:
@@ -134,5 +135,5 @@ for i in range(0, len(hp_space)):
                                fit_param['epochs'],
                                fit_param['activation'], fit_param['optimizer'],
                                fin_trainer.early_stopping.early_stop]
-        print(r.loc[len(r.index) - 1])
+        logging.info(r.loc[len(r.index) - 1])
         r.to_csv(res_path)
