@@ -36,8 +36,11 @@ logging.info(f'Using device: {device}')
 # Additional Info when using cuda
 if device.type == 'cuda':
     logging.info(f'Device name: {torch.cuda.get_device_name(0)}')
-    logging.info(f'Memory Usage: Allocated - {round(torch.cuda.memory_allocated(0) / 1024 ** 3, 1)} GB |'
-                 f' Cached - {round(torch.cuda.memory_reserved(0) / 1024 ** 3, 1)} GB')
+    memory_stats = torch.cuda.memory_stats(device=device)
+    # Print the memory information
+    logging.info(f"Total GPU memory: {memory_stats['allocated_bytes.all.current'] / (1024 ** 3):.2f} GB")
+    logging.info(f"GPU memory in use: {memory_stats['allocated_bytes.all.allocated'] / (1024 ** 3):.2f} GB")
+    logging.info(f"GPU memory cached: {memory_stats['allocated_bytes.all.reserved'] / (1024 ** 3):.2f} GB")
 else:
     logging.info(f'Using CPU: {device}')
 
