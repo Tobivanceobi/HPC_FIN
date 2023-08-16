@@ -28,7 +28,7 @@ print(sys.argv[1])
 run = int(sys.argv[1])
 num_nodes = int(sys.argv[2])
 pid = int(sys.argv[1])
-logging.basicConfig(filename=f'out/jobs/job{pid}.log', level=logging.INFO, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename=f'out/jobs/job{pid}.log', level=logging.INFO)
 # setting device on GPU if available, else CPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 logging.info(f"Job {pid} started...")
@@ -125,7 +125,7 @@ for i in range(0, 2):
 
             score = fin_trainer.fit_model()
 
-            print(f'Phase {phase} - Evaluation MAE: ', score)
+            logging.info(f'Phase {phase} - Evaluation MAE: {score}')
             eval_score.append(score)
 
         # Read in the results
@@ -137,5 +137,5 @@ for i in range(0, 2):
                                fit_param['epochs'],
                                fit_param['activation'], fit_param['optimizer'],
                                fin_trainer.early_stopping.early_stop]
-        print(r.loc[len(r.index) - 1])
+        logging.info(r.loc[len(r.index) - 1])
         r.to_csv(res_path)

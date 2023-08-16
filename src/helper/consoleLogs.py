@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 
@@ -13,62 +14,59 @@ class CColors:
     UNDERLINE = '\033[4m'
 
 COLORS = CColors()
-
+logging.basicConfig(filename=f'out/jobs/job{pid}.log', level=logging.INFO)
 
 def log_loading_data(subj_id: int, progress: tuple[int, int]) -> None:
-    sys.stdout.write('\r')
     logging.info(
         f"{COLORS.OKGREEN}Loading {COLORS.BOLD}EEG data{COLORS.ENDC}"
-        f": {progress[0] + 1} / {progress[1]} - Subject ID {subj_id}", end='')
+        f": {progress[0] + 1} / {progress[1]} - Subject ID {subj_id}")
 
 
 def log_n_samp_warning(total_subj: int, n_subj: int) -> None:
-    print('')
-    print(f"{COLORS.WARNING}Warning{COLORS.ENDC}"
+    logging.info(f"{COLORS.WARNING}Warning{COLORS.ENDC}"
           f": Max number of subjects is {total_subj}. Defaulting from {n_subj} to {total_subj}.")
-    print('')
 
 
 def log_error_target_not_available(target: str, avl_targets: list[str]):
-    print(f"{COLORS.FAIL} ERROR: {COLORS.ENDC} Target {target} not in available targets {avl_targets}.")
+    logging.info(f"{COLORS.FAIL} ERROR: {COLORS.ENDC} Target {target} not in available targets {avl_targets}.")
 
 
 def log_model_training_info(device, model, learning_rate, momentum, weight_decay):
-    print(f'Running on device: {device}')
-    print('Model Architecture:')
-    print(model)
-    print(f'{COLORS.OKBLUE}Optimizer Parameters:{COLORS.ENDC}')
-    print(f'    {COLORS.OKCYAN}learning rate {COLORS.ENDC}: {learning_rate}')
-    print(f'    {COLORS.OKCYAN}momentum      {COLORS.ENDC}: {momentum}')
-    print(f'    {COLORS.OKCYAN}weight decay  {COLORS.ENDC}: {weight_decay}')
+    logging.info(f'Running on device: {device}')
+    logging.info('Model Architecture:')
+    logging.info(model)
+    logging.info(f'{COLORS.OKBLUE}Optimizer Parameters:{COLORS.ENDC}')
+    logging.info(f'    {COLORS.OKCYAN}learning rate {COLORS.ENDC}: {learning_rate}')
+    logging.info(f'    {COLORS.OKCYAN}momentum      {COLORS.ENDC}: {momentum}')
+    logging.info(f'    {COLORS.OKCYAN}weight decay  {COLORS.ENDC}: {weight_decay}')
 
 
 def log_curr_epoch_loss(progress, loss_train, loss_val, lr):
-    print('')
-    print('====================================')
-    print(f'{COLORS.BOLD}Epoch{COLORS.ENDC} [{progress[0]}/{progress[1]}], '
+    logging.info('')
+    logging.info('====================================')
+    logging.info(f'{COLORS.BOLD}Epoch{COLORS.ENDC} [{progress[0]}/{progress[1]}], '
           f'{COLORS.OKBLUE}Train{COLORS.ENDC}: {loss_train:.3f}, '
           f'{COLORS.OKGREEN}Test{COLORS.ENDC}: {loss_val:.3f}, '
           f'{COLORS.OKCYAN}lr{COLORS.ENDC}: {lr}')
-    print('====================================')
-    print('')
+    logging.info('====================================')
+    logging.info('')
 
 
 def log_early_stopping(progress):
-    print('====================================')
-    print(f'{COLORS.WARNING}Early stopping was triggerd{COLORS.ENDC}: '
+    logging.info('====================================')
+    logging.info(f'{COLORS.WARNING}Early stopping was triggerd{COLORS.ENDC}: '
           f'epoch {progress[0]} from {progress[1]}')
-    print('====================================')
-    print('')
+    logging.info('====================================')
+    logging.info('')
 
 
 def log_final_eval(loss_val):
-    print('====================================')
-    print(f'{COLORS.OKGREEN}Final Evaluation MAE Loss{COLORS.ENDC}: {loss_val:.3f}')
-    print('====================================')
-    print('')
+    logging.info('====================================')
+    logging.info(f'{COLORS.OKGREEN}Final Evaluation MAE Loss{COLORS.ENDC}: {loss_val:.3f}')
+    logging.info('====================================')
+    logging.info('')
 
 
 def log_curr_step_loss(progress, loss):
-    print(f'{COLORS.BOLD}Step{COLORS.ENDC}  [{progress[0]}/{progress[1]}], '
+    logging.info(f'{COLORS.BOLD}Step{COLORS.ENDC}  [{progress[0]}/{progress[1]}], '
           f'{COLORS.OKBLUE}Loss{COLORS.ENDC} : {loss:.5f}')
