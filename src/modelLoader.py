@@ -8,7 +8,7 @@ from src.network.dynamicNN import DynamicNeuralNetwork
 
 
 class ModelLoader:
-    MODEL_PATH = r'/home/modelrep/sadiya/tobias_ettling/data/models/'
+    MODEL_PATH = r'/scratch/modelrep/sadiya/students/tobias/data/models/'
 
     def __init__(self, sel_models):
         self.__device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

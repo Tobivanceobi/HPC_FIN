@@ -8,9 +8,9 @@ from src.helper.pickleLoader import save_object, load_object
 
 
 class DatasetLoader:
-    TARGET_PATH = r'/home/modelrep/sadiya/tobias_ettling/data/train_subjects.csv'
-    DATA_PATH = r'/home/modelrep/sadiya/tobias_ettling/data/training/'
-    CACHE_PATH = r'/home/modelrep/sadiya/tobias_ettling/data/cache/'
+    TARGET_PATH = r'/scratch/modelrep/sadiya/students/tobias/data/train_subjects.csv'
+    DATA_PATH = r'/scratch/modelrep/sadiya/students/tobias/data/training/'
+    CACHE_PATH = r'/scratch/modelrep/sadiya/students/tobias/data/cache/'
     FREQ_BANDS = {
         'delta': [0.5, 4],
         'theta': [4, 8],
