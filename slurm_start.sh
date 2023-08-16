@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --partition=gpu
-#SBATCH --nodes=4
-#SBATCH --ntasks=4
-#SBATCH --cpus-per-task=2
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=5000
 #SBATCH --tmp=20000
 #SBATCH --time=05:00:00
