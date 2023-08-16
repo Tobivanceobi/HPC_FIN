@@ -39,16 +39,17 @@ if device.type == 'cuda':
 else:
     print('Using CPU :(')
 
-fb = ['delta']
+fb = ['delta', 'theta', 'alpha', 'beta', 'whole_spec']
 md = ['delta_quantile', 'theta_quantile', 'alpha_quantile', 'beta_quantile', 'whole_spec_quantile']
+for fb in fb:
+    print(fb)
+    dl = DatasetLoader(40000, ['EC', 'EO'], [fb])
+    dl.check_cache()
 
-dl = DatasetLoader(40000, ['EC', 'EO'], fb)
-dl.check_cache()
-
-x_data = dl.x_data
-y_data = dl.y_data
-group = dl.group
-sample_ids = dl.sample_ids
+    x_data = dl.x_data
+    y_data = dl.y_data
+    group = dl.group
+    sample_ids = dl.sample_ids
 #
 # gkf = GroupKFold(n_splits=5)
 # train_index, test_index = next(iter(gkf.split(x_data, y_data, group)))
