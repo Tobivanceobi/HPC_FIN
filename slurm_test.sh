@@ -12,7 +12,11 @@
 
 # Remove previous results
 #rm err/*; rm out/*; rm -r runs/*;
+source $HOME/miniconda/etc/profile.d/conda.sh
+conda init bash
+conda activate pytorch
 
-source $HOME/tobias_ettling/HPC_FIN/venv/bin/activate
 python3 $HOME/tobias_ettling/HPC_FIN/slurm_test.py $SLURM_ARRAY_TASK_ID $SLURM_NNODES
-deactivate
+
+conda deactivate
+
