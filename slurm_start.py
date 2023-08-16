@@ -1,6 +1,7 @@
 import logging
 import os
 import sys
+import random
 
 import pandas as pd
 import torch
@@ -75,7 +76,7 @@ if not (os.path.isfile(res_path)):
     df.to_csv(res_path)
 
 hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hptSpace')
-
+random.shuffle(hp_space)
 for i in range(0, len(hp_space)):
     if i % num_nodes == pid:
         hyper_param = hp_space[i]

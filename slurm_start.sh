@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH --partition=gpu
-#SBATCH --nodes=10
-#SBATCH --ntasks=10
+#SBATCH --nodes=4
+#SBATCH --ntasks=4
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=5000
 #SBATCH --time=05:00:00
-#SBATCH --array=0-9
+#SBATCH --array=0-3
 #SBATCH --mail-type=FAIL
 #SBATCH --output out/output_%a.txt
 #SBATCH --error err/error_%a.txt
