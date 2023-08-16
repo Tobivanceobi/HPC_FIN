@@ -17,7 +17,7 @@ COLORS = CColors()
 
 def log_loading_data(subj_id: int, progress: tuple[int, int]) -> None:
     sys.stdout.write('\r')
-    z
+    print(
         f"{COLORS.OKGREEN}Loading {COLORS.BOLD}EEG data{COLORS.ENDC}"
         f": {progress[0] + 1} / {progress[1]} - Subject ID {subj_id}", end='')
 
