@@ -43,7 +43,9 @@ fb = ['delta', 'theta', 'alpha', 'beta', 'whole_spec']
 md = ['delta_quantile', 'theta_quantile', 'alpha_quantile', 'beta_quantile', 'whole_spec_quantile']
 
 dl = DatasetLoader(40000, ['EC', 'EO'], fb)
-dl.check_cache()
+dl.get_epoch_ids()
+dl.get_x_data()
+dl.get_y_data()
 
 x_data = dl.x_data
 y_data = dl.y_data

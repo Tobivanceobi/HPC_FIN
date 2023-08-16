@@ -115,27 +115,3 @@ class DatasetLoader:
         for fb in self.__freq_bands:
             cache_code += fb + '_'
         return cache_code + 'set'
-
-    def check_cache(self):
-        cache_code = self.get_cache_code()
-        if os.path.isfile(self.CACHE_PATH + cache_code + '.pickle'):
-            obj = load_object(self.CACHE_PATH + cache_code)
-            self.x_data = obj['x_data']
-            self.y_data = obj['y_data']
-            self.sample_ids = obj['sample_ids']
-            self.group = obj['group']
-            self.data_order = obj['fin_order']
-            return obj
-        else:
-            self.get_epoch_ids()
-            self.get_x_data()
-            self.get_y_data()
-            obj = dict()
-            obj['x_data'] = self.x_data
-            obj['y_data'] = self.y_data
-            obj['sample_ids'] = self.sample_ids
-            obj['group'] = self.group
-            obj['fin_order'] = self.data_order
-            cache_code = self.get_cache_code()
-            save_object(obj, self.CACHE_PATH + cache_code)
-            return obj
