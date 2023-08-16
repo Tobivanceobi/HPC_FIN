@@ -1,5 +1,3 @@
-import logging
-
 import numpy as np
 import torch
 from torch import nn, optim
@@ -51,9 +49,9 @@ class FINTrainer:
         # Create an instance of the dynamic neural network
         self.model = model.to(self.__device)
 
-        logging.info(f'Running on device: {self.__device}')
-        logging.info('Model Architecture:')
-        logging.info(self.model)
+        print(f'Running on device: {self.__device}')
+        print('Model Architecture:')
+        print(self.model)
 
         # Set criterion for training
         self.__criterion = nn.MSELoss()

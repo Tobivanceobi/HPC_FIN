@@ -28,11 +28,10 @@ print(sys.argv[1])
 run = int(sys.argv[1])
 num_nodes = int(sys.argv[2])
 pid = int(sys.argv[1])
-logging.basicConfig(filename=f'out/jobs/job{pid}.log', level=logging.INFO)
 # setting device on GPU if available, else CPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-logging.info(f"Job {pid} started...")
-logging.info(f'Using device: {device}')
+print(f"Job {pid} started...")
+print(f'Using device: {device}')
 
 if torch.cuda.is_available():
     num_gpus = torch.cuda.device_count()
