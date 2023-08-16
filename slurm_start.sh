@@ -4,7 +4,7 @@
 #SBATCH --ntasks=4
 #SBATCH --cpus-per-task=2
 #SBATCH --mem-per-cpu=8000
-#SBATCH --tmp=15000
+#SBATCH --tmp=25000
 #SBATCH --time=05:00:00
 #SBATCH --array=0-3
 #SBATCH --mail-type=FAIL
