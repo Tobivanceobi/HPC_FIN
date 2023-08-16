@@ -20,14 +20,7 @@ from src.network.utiles import Data, EarlyStopping
 # Writer will output to ./runs/ directory by default
 writer = SummaryWriter()
 
-print(sys.argv[0])
-print('-----------------')
-print(sys.argv[1])
-
-run = int(sys.argv[1])
-num_nodes = int(sys.argv[2])
-pid = int(sys.argv[1])
-logging.basicConfig(filename=f'/scratch/modelrep/sadiya/students/tobias/data/jobs/job{pid}.log', level=logging.INFO)
+logging.basicConfig(filename=f'/scratch/modelrep/sadiya/students/tobias/data/jobs/job.log', level=logging.INFO)
 # setting device on GPU if available, else CPU
 
 
@@ -50,24 +43,24 @@ train_index, test_index = next(iter(gkf.split(x_data, y_data, group)))
 x_train, x_test = [x_data[i] for i in train_index], [x_data[i] for i in test_index]
 y_train, y_test = [y_data[i] for i in train_index], [y_data[i] for i in test_index]
 
-# Create a file to save our model scores with their parameters.
-dir_path = r"/home/modelrep/sadiya/tobias_ettling/HPC_FIN/results/"
-res_path = dir_path + f'hpt_{pid}.csv'
-
-# Check to avoid overwrite
-if not (os.path.isfile(res_path)):
-    # Create dataframe with parameters/score columns
-    df = pd.DataFrame(
-        columns=['MAE score P1', 'MAE score P2', 'loss', 'learning_rate', 'batch_size', 'hidden_sizes', 'epochs',
-                 'activation', 'optimizer', 'early stopping'])
-    df.to_csv(res_path)
-
 hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hptSpace')
 random.shuffle(hp_space)
 
 
 def process_data(pid):
     device = torch.device(f'cuda:{pid}')
+    # Create a file to save our model scores with their parameters.
+    dir_path = r"/home/modelrep/sadiya/tobias_ettling/HPC_FIN/results/"
+    res_path = dir_path + f'hpt_{pid}.csv'
+
+    # Check to avoid overwrite
+    if not (os.path.isfile(res_path)):
+        # Create dataframe with parameters/score columns
+        df = pd.DataFrame(
+            columns=['MAE score P1', 'MAE score P2', 'loss', 'learning_rate', 'batch_size', 'hidden_sizes', 'epochs',
+                     'activation', 'optimizer', 'early stopping'])
+        df.to_csv(res_path)
+
     train_data = Data(x_train, y_train, device)
     test_data = Data(x_test, y_test, device)
     for i in range(0, len(hp_space)):
