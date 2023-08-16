@@ -24,7 +24,7 @@ print(sys.argv[1])
 run = int(sys.argv[1])
 num_nodes = int(sys.argv[2])
 pid = int(sys.argv[1])
-
+sys.stdout = open(f'job_{pid}.log', 'w')
 # setting device on GPU if available, else CPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print('Using device:', device)
