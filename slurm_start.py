@@ -62,7 +62,7 @@ train_data = Data(x_train, y_train, device)
 test_data = Data(x_test, y_test, device)
 
 # Create a file to save our model scores with their parameters.
-dir_path = r"/home/modelrep/sadiya/tobias_ettling/data/results/"
+dir_path = r"/home/modelrep/sadiya/tobias_ettling/HPC_FIN/results/"
 res_path = dir_path + f'hpt_{pid}.csv'
 
 # Check to avoid overwrite
