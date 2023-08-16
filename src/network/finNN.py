@@ -20,6 +20,8 @@ class FeatureImitationNetwork(nn.Module):
         x = torch.tensor([]).to(self.__device)
         for key in self.__stage_1.keys():
             fb = key.split('_')[0]
+            if 'whole_spec' in key:
+                fb = 'whole_spec'
             data_idx = self.data_order.index(fb)
             x_fin = self.__stage_1[key](x_in[data_idx])
             x = torch.cat((x, x_fin), dim=1)
