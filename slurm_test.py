@@ -73,7 +73,7 @@ if not (os.path.isfile(res_path)):
                  'activation', 'optimizer', 'early stopping'])
     df.to_csv(res_path)
 
-hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hpt_space')
+hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hptSpace')
 
 for i in range(0, 2):
     if i % num_nodes == pid:
