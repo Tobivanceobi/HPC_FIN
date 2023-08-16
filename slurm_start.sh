@@ -13,7 +13,7 @@
 
 # Remove previous results
 rm err/*; rm out/*; rm -r runs/*;
-mkdir err/jobs
+mkdir out/jobs
 source $HOME/miniconda/etc/profile.d/conda.sh
 conda init bash
 conda activate pytorch
