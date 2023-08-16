@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --partition=gpu
-#SBATCH --nodes=10
-#SBATCH --ntasks=10
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=4000
 #SBATCH --time=00:10:00
@@ -14,5 +14,5 @@
 #rm err/*; rm out/*; rm -r runs/*;
 
 source $HOME/tobias_ettling/HPC-FIN/venv/bin/activate
-python3 $HOME/tobias_ettling/HPC-FIN/slurm_start.py $SLURM_ARRAY_TASK_ID $SLURM_NNODES
+python3 $HOME/tobias_ettling/HPC-FIN/slurm_test.py $SLURM_ARRAY_TASK_ID $SLURM_NNODES
 deactivate
