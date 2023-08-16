@@ -64,7 +64,7 @@ class DatasetLoader:
         x_data_temp = []
         for d in range(len(self.cache_data_fname)):
             obj = load_object(self.DATA_PATH + self.cache_data_fname[d])
-            freq_band = self.cache_data_fname[d].split('_16')[0]
+            freq_band = self.cache_data_fname[d].split('_1')[0]
             self.data_order.append(freq_band)
             print(freq_band)
             fb_x_data = []

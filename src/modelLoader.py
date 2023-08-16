@@ -57,6 +57,8 @@ class ModelLoader:
                     )
                     if fb + '_' + m in self.selected_models:
                         self.model_dict[fb + '_' + m] = info_dict
+                else:
+                    print(f'model files for fin: {m} - {fb}')
         return self.model_dict
 
     def check_model_files(self, fq_band, method):
