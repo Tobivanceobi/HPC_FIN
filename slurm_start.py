@@ -130,9 +130,9 @@ for i in range(0, len(hp_space)):
 
         # Add new results
         r.loc[len(r.index)] = [eval_score[0], eval_score[1], min(fin_trainer.loss_log['train_loss']),
-                               fit_param['learning_rate'], fit_param['batch_size'], str(fit_param['hidden_sizes']),
-                               fit_param['epochs'],
-                               fit_param['activation'], fit_param['optimizer'],
+                               hyper_param['learning_rate'], hyper_param['batch_size'], str(hyper_param['hidden_sizes']),
+                               hyper_param['epochs'],
+                               hyper_param['activation'], hyper_param['optimizer'],
                                fin_trainer.early_stopping.early_stop]
         print(r.loc[len(r.index) - 1])
         r.to_csv(res_path)
