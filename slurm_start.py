@@ -108,7 +108,7 @@ for i in range(0, len(hp_space)):
     model = FeatureImitationNetwork(stage_1, stage_2, dl.data_order, device, freeze_fins=True)
     model.to(device)
 
-    early_stopping = EarlyStopping(tolerance=3, min_delta=0.2)
+    early_stopping = EarlyStopping(tolerance=5, min_delta=0.4)
 
     fit_param = dict(
         learning_rate=hyper_param['learning_rate'],

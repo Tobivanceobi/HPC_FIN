@@ -24,7 +24,7 @@ hidden_sizes = [
     [1000, 500, 250, 150, 100, 50, 20],
     [600, 300, 150, 100, 50, 20, 10]
 ]
-epochs = 5
+epochs = 8
 activation = ['relu', 'tanh', 'sigmoid']
 optimizer = ['sgd']
 dropout_p = 0.2
