@@ -58,30 +58,6 @@ def check_if_param_used(param, hpt_path):
     ).any()
     return condition.any()
 
-
-print('-----------------')
-print('Process ID: ', sys.argv[1])
-print('Number of Nodes: ', sys.argv[2])
-print('Number of Array Tasks: ', sys.argv[3])
-print('-----------------')
-
-num_nodes = int(sys.argv[2])
-num_array = int(sys.argv[3])
-pid = int(sys.argv[1])
-# setting device on GPU if available, else CPU
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print('Using device:', device)
-print()
-
-# Additional Info when using cuda
-if device.type == 'cuda':
-    print(torch.cuda.get_device_name(0))
-    print('Memory Usage:')
-    print('Allocated:', round(torch.cuda.memory_allocated(0) / 1024 ** 3, 1), 'GB')
-    print('Cached:   ', round(torch.cuda.memory_reserved(0) / 1024 ** 3, 1), 'GB')
-else:
-    print('Using CPU :(')
-
 fb = ['delta', 'theta', 'alpha', 'beta', 'whole_spec']
 md = ['delta_quantile', 'theta_quantile', 'alpha_quantile', 'beta_quantile', 'whole_spec_quantile']
 
