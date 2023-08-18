@@ -86,7 +86,7 @@ for i in range(1, len(hp_space) + 1):
     if i % (pid + 1) == 0:
         hyper_param = hp_space[i-1]
 
-        if not (check_if_param_used(hyper_param, res_path)):
+        if check_if_param_used(hyper_param, res_path):
             print('Already used Hyperparameters: ', hyper_param)
             continue
 
