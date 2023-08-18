@@ -20,7 +20,6 @@ def check_if_param_used(param, hpt_path):
             (hpt_df['learning_rate'] == param['learning_rate']) &
             (hpt_df['batch_size'] == param['batch_size']) &
             (hpt_df['hidden_sizes'] == str(param['hidden_sizes'])) &
-            (hpt_df['activation'] == param['activation']) &
             (hpt_df['activation'] == param['activation'])
     ).any()
     return condition.any()
