@@ -4,7 +4,7 @@ import sys
 import numpy as np
 import pandas as pd
 import torch
-from sklearn.model_selection import GroupKFold
+from sklearn.model_selection import GroupKFold, StratifiedKFold
 
 from src.datasetLoader import DatasetLoader
 from src.finTrainer import FINTrainer
@@ -96,8 +96,11 @@ y_data = dl.y_data
 group = dl.group
 sample_ids = dl.sample_ids
 
-gkf = GroupKFold(n_splits=5)
-train_index, test_index = next(iter(gkf.split(x_data, y_data, group)))
+y_stf = [int(age*10) for age in y_data]
+equalize_classes(y_data)
+skf_vals = []
+skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=126)
+train_index, test_index = next(iter(skf.split(x_data, y_stf, group)))
 
 x_train, x_test = [x_data[i] for i in train_index], [x_data[i] for i in test_index]
 y_train, y_test = [y_data[i] for i in train_index], [y_data[i] for i in test_index]
