@@ -63,14 +63,14 @@ class FINTrainer:
         if eval_crt == 'mae':
             self.__criterion_eval = nn.L1Loss()
 
-        self.__optimizer = optim.SGD(
+        self.optimizer = optim.SGD(
             self.model.parameters(),
             lr=param['learning_rate'],
             momentum=param['momentum'],
             weight_decay=param['weight_decay']
         )
         self.__scheduler = optim.lr_scheduler.StepLR(
-            self.__optimizer,
+            self.optimizer,
             step_size=param['sched_ss'],
             gamma=param['sched_g']
         )
@@ -107,7 +107,7 @@ class FINTrainer:
             self.loss_log['test_loss'].append(loss_val)
             self.loss_log['train_loss'].append(loss_train)
             if self.__verbose:
-                lr = self.__optimizer.param_groups[0]['lr']
+                lr = self.optimizer.param_groups[0]['lr']
                 log_curr_epoch_loss((ep, self.epochs), loss_train, loss_val, lr)
             if self.early_stopping is not None:
                 self.early_stopping(loss_train, loss_val)
@@ -140,9 +140,9 @@ class FINTrainer:
             loss_ep.append(loss.item())
 
             # Backpropagation and optimization
-            self.__optimizer.zero_grad()
+            self.optimizer.zero_grad()
             loss.backward()
-            self.__optimizer.step()
+            self.optimizer.step()
 
             # Update the running loss
             running_loss += loss.item()
