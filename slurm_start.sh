@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=5000
 #SBATCH --time=15:00:00
-#SBATCH --array=0-10
+#SBATCH --array=0-20
 #SBATCH --mail-type=FAIL
 #SBATCH --output out/output_%a.txt
 #SBATCH --error err/error_%a.txt
