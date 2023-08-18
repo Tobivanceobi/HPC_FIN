@@ -69,7 +69,7 @@ dl.get_y_data()
 x_data = dl.x_data
 y_data = dl.y_data
 group = dl.group
-print(y_data)
+print(np.unique(y_data))
 y_stf = [int(age*10) for age in y_data]
 equalize_classes(y_data)
 skf_vals = []
