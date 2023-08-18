@@ -4,8 +4,6 @@ import sys
 import pandas as pd
 import torch
 from sklearn.model_selection import GroupKFold
-from torch.utils.tensorboard import SummaryWriter
-import logging
 
 from src.datasetLoader import DatasetLoader
 from src.finTrainer import FINTrainer
@@ -15,8 +13,18 @@ from src.network.dynamicNN import DynamicNeuralNetwork
 from src.network.finNN import FeatureImitationNetwork
 from src.network.utiles import Data, EarlyStopping
 
-# Writer will output to ./runs/ directory by default
-writer = SummaryWriter()
+
+def check_if_param_used(param, hpt_path):
+    hpt_df = pd.read_csv(hpt_path, index_col=0)
+    condition = (
+            (hpt_df['learning_rate'] == param['learning_rate']) &
+            (hpt_df['batch_size'] == param['batch_size']) &
+            (hpt_df['hidden_sizes'] == str(param['hidden_sizes'])) &
+            (hpt_df['activation'] == param['activation']) &
+            (hpt_df['activation'] == param['activation'])
+    ).any()
+    return condition.any()
+
 
 print(sys.argv[0])
 print('-----------------')
@@ -75,9 +83,14 @@ if not (os.path.isfile(res_path)):
 
 hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hptSpace')
 
-for i in range(0, len(hp_space)):
-    if i % pid == 0:
-        hyper_param = hp_space[i]
+for i in range(1, len(hp_space) + 1):
+    if i % (pid + 1) == 0:
+        hyper_param = hp_space[i-1]
+
+        if not (check_if_param_used(hyper_param, res_path)):
+            print('Already used Hyperparameters: ', hyper_param)
+            continue
+
         hyper_param['device'] = device
         hyper_param['input_size'] = len(fb * 100)
 
@@ -130,7 +143,8 @@ for i in range(0, len(hp_space)):
 
         # Add new results
         r.loc[len(r.index)] = [eval_score[0], eval_score[1], min(fin_trainer.loss_log['train_loss']),
-                               hyper_param['learning_rate'], hyper_param['batch_size'], str(hyper_param['hidden_sizes']),
+                               hyper_param['learning_rate'], hyper_param['batch_size'],
+                               str(hyper_param['hidden_sizes']),
                                hyper_param['epochs'],
                                hyper_param['activation'], hyper_param['optimizer'],
                                fin_trainer.early_stopping.early_stop]

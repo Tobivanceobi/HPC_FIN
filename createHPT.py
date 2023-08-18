@@ -2,8 +2,8 @@ import numpy as np
 
 from src.helper.pickleLoader import save_object
 
-learning_rate = np.linspace(0.00001, 0.3, 30)
-batch_size = [8, 16, 32, 64, 128, 256]
+learning_rate = np.linspace(0.00001, 0.3, 20)
+batch_size = [32, 64, 128, 256]
 
 hidden_sizes = [
     [1000],
@@ -21,7 +21,7 @@ hidden_sizes = [
     [1000, 500, 250, 150, 100, 50, 20],
     [600, 300, 150, 100, 50, 20, 10]
 ]
-epochs = 10
+epochs = 7
 activation = ['relu', 'tanh', 'sigmoid']
 optimizer = ['sgd']
 dropout_p = 0.2

@@ -19,6 +19,16 @@ from src.network.utiles import Data, EarlyStopping
 writer = SummaryWriter()
 
 
+def check_if_param_used(param, hpt_path):
+    hpt_df = pd.read_csv(hpt_path, index_col=0)
+    condition = (
+            (hpt_df['learning_rate'] == param['learning_rate']) &
+            (hpt_df['batch_size'] == param['batch_size']) &
+            (hpt_df['hidden_sizes'] == str(param['hidden_sizes'])) &
+            (hpt_df['activation'] == param['activation']) &
+            (hpt_df['activation'] == param['activation'])
+    ).any()
+    return condition.any()
 
 
 print(sys.argv[0])
@@ -79,63 +89,66 @@ if not (os.path.isfile(res_path)):
 hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hptSpace')
 
 for i in range(0, 2):
-    if i % num_nodes == pid:
+    if i % pid == o:
         hyper_param = hp_space[i]
-        hyper_param['device'] = device
-        hyper_param['input_size'] = len(fb * 100)
-
-        ml = ModelLoader(md)  # , 'whole_spec_quantile'
-        ml.build_fin_models()
-        stage_1 = ml.fin_models
-        stage_2 = DynamicNeuralNetwork(
-            input_size=hyper_param['input_size'],
-            output_size=hyper_param['output_size'],
-            hidden_sizes=hyper_param['hidden_sizes'],
-            activ=hyper_param['activation'],
-            dropout_p=hyper_param['dropout_p']
-        )
-
-        model = FeatureImitationNetwork(stage_1, stage_2, dl.data_order, device, freeze_fins=True)
-        model.to(device)
-
-        early_stopping = EarlyStopping(tolerance=3, min_delta=0.2)
-
-        fit_param = dict(
-            learning_rate=hyper_param['learning_rate'],
-            batch_size=hyper_param['batch_size'],
-            epochs=hyper_param['epochs'],
-            weight_decay=hyper_param['weight_decay'],
-            momentum=hyper_param['momentum'],
-            activation=hyper_param['activation'],
-            sched_ss=hyper_param['sched_ss'],
-            sched_g=hyper_param['sched_g']
-        )
-        eval_score = []
-        for phase in [1, 2]:
-            if phase == 2:
-                model.unfreeze_fins()
-
-            fin_trainer = FINTrainer(
-                model,
-                fit_param,
-                train_data,
-                test_data,
-                early_stop=early_stopping,
-            )
-
-            score = fin_trainer.fit_model()
-
-            print(f'Phase {phase} - Evaluation MAE: ', score)
-            eval_score.append(score)
-
-        # Read in the results
-        r = pd.read_csv(res_path, index_col=0)
-
-        # Add new results
-        r.loc[len(r.index)] = [eval_score[0], eval_score[1], min(fin_trainer.loss_log['train_loss']),
-                               fit_param['learning_rate'], fit_param['batch_size'], str(fit_param['hidden_sizes']),
-                               fit_param['epochs'],
-                               fit_param['activation'], fit_param['optimizer'],
-                               fin_trainer.early_stopping.early_stop]
-        print(r.loc[len(r.index) - 1])
-        r.to_csv(res_path)
+        if not (check_if_param_used(hyper_param, res_path)):
+            print('Already used Hyperparameters: ', hyper_param)
+            continue
+        # hyper_param['device'] = device
+        # hyper_param['input_size'] = len(fb * 100)
+        #
+        # ml = ModelLoader(md)  # , 'whole_spec_quantile'
+        # ml.build_fin_models()
+        # stage_1 = ml.fin_models
+        # stage_2 = DynamicNeuralNetwork(
+        #     input_size=hyper_param['input_size'],
+        #     output_size=hyper_param['output_size'],
+        #     hidden_sizes=hyper_param['hidden_sizes'],
+        #     activ=hyper_param['activation'],
+        #     dropout_p=hyper_param['dropout_p']
+        # )
+        #
+        # model = FeatureImitationNetwork(stage_1, stage_2, dl.data_order, device, freeze_fins=True)
+        # model.to(device)
+        #
+        # early_stopping = EarlyStopping(tolerance=3, min_delta=0.2)
+        #
+        # fit_param = dict(
+        #     learning_rate=hyper_param['learning_rate'],
+        #     batch_size=hyper_param['batch_size'],
+        #     epochs=hyper_param['epochs'],
+        #     weight_decay=hyper_param['weight_decay'],
+        #     momentum=hyper_param['momentum'],
+        #     activation=hyper_param['activation'],
+        #     sched_ss=hyper_param['sched_ss'],
+        #     sched_g=hyper_param['sched_g']
+        # )
+        # eval_score = []
+        # for phase in [1, 2]:
+        #     if phase == 2:
+        #         model.unfreeze_fins()
+        #
+        #     fin_trainer = FINTrainer(
+        #         model,
+        #         fit_param,
+        #         train_data,
+        #         test_data,
+        #         early_stop=early_stopping,
+        #     )
+        #
+        #     score = fin_trainer.fit_model()
+        #
+        #     print(f'Phase {phase} - Evaluation MAE: ', score)
+        #     eval_score.append(score)
+        #
+        # # Read in the results
+        # r = pd.read_csv(res_path, index_col=0)
+        #
+        # # Add new results
+        # r.loc[len(r.index)] = [eval_score[0], eval_score[1], min(fin_trainer.loss_log['train_loss']),
+        #                        fit_param['learning_rate'], fit_param['batch_size'], str(fit_param['hidden_sizes']),
+        #                        fit_param['epochs'],
+        #                        fit_param['activation'], fit_param['optimizer'],
+        #                        fin_trainer.early_stopping.early_stop]
+        # print(r.loc[len(r.index) - 1])
+        # r.to_csv(res_path)

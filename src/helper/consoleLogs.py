@@ -1,6 +1,9 @@
 import os
 import sys
 
+from typing import Tuple, List
+
+
 class CColors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -15,7 +18,7 @@ class CColors:
 COLORS = CColors()
 
 
-def log_loading_data(subj_id: int, progress: tuple[int, int]) -> None:
+def log_loading_data(subj_id: int, progress: Tuple[int, int]) -> None:
     sys.stdout.write('\r')
     print(
         f"{COLORS.OKGREEN}Loading {COLORS.BOLD}EEG data{COLORS.ENDC}"
@@ -29,7 +32,7 @@ def log_n_samp_warning(total_subj: int, n_subj: int) -> None:
     print('')
 
 
-def log_error_target_not_available(target: str, avl_targets: list[str]):
+def log_error_target_not_available(target: str, avl_targets: List[str]):
     print(f"{COLORS.FAIL} ERROR: {COLORS.ENDC} Target {target} not in available targets {avl_targets}.")
 
 
