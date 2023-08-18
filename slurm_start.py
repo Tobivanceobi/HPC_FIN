@@ -83,9 +83,7 @@ if not (os.path.isfile(res_path)):
                  'activation', 'optimizer', 'early stopping'])
     df.to_csv(res_path)
 
-hp_space = load_object('/home/modelrep/sadiya/tobias_ettling/HPC_FIN/hptSpace')
-l = np.array_split(np.array(hp_space), num_array)
-hp_space = l[pid]
+hp_space = load_object(f'./hp_params/hptSpace_{pid}')
 for i in range(0, len(hp_space)):
     hyper_param = hp_space[i]
 

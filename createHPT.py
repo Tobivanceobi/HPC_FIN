@@ -2,6 +2,9 @@ import numpy as np
 
 from src.helper.pickleLoader import save_object
 
+
+num_of_proc = [i for i in range(0, 16)]
+
 learning_rate = np.linspace(0.00001, 0.3, 20)
 batch_size = [32, 64, 128, 256]
 
@@ -53,7 +56,10 @@ def create_hpt_space():
                         hp_space.append(conf)
 
     print('Number of parameter settings: ', len(hp_space))
+    task_arr = np.array_split(hp_space, len(num_of_proc))
+    for i in num_of_proc:
+        print(f'Number of parameter settings for {i}: {len(task_arr[i])}')
+        save_object(task_arr[i], f'./hp_params/hptSpace_{i}')
 
-    save_object(hp_space, './hptSpace')
 
 create_hpt_space()
