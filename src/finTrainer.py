@@ -69,6 +69,13 @@ class FINTrainer:
             momentum=param['momentum'],
             weight_decay=param['weight_decay']
         )
+        if param['optimizer'] == 'adam':
+            self.optimizer = optim.Adam(
+                self.model.parameters(),
+                lr=param['learning_rate'],
+                weight_decay=param['weight_decay']
+            )
+
         self.__scheduler = optim.lr_scheduler.StepLR(
             self.optimizer,
             step_size=param['sched_ss'],

@@ -148,6 +148,7 @@ for i in range(0, len(hp_space)):
     early_stopping = EarlyStopping(tolerance=5, min_delta=1)
 
     fit_param = dict(
+        optimizer=hyper_param['optimizer'],
         learning_rate=hyper_param['learning_rate'],
         batch_size=hyper_param['batch_size'],
         epochs=hyper_param['epochs'],
