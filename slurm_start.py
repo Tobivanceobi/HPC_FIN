@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 
 import numpy as np
@@ -121,6 +122,7 @@ if not (os.path.isfile(res_path)):
     df.to_csv(res_path)
 
 hp_space = load_object(f'./hp_params/hptSpace_{pid}')
+random.shuffle(hp_space)
 for i in range(0, len(hp_space)):
     hyper_param = hp_space[i]
 
