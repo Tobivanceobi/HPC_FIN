@@ -41,21 +41,22 @@ def create_hpt_space():
                     for opt in optimizer:
                         for wd in weight_decay:
                             for m in momentum:
-                                conf = dict(
-                                    hidden_sizes=hs,
-                                    learning_rate=learning_rate[lr_idx],
-                                    batch_size=bs,
-                                    epochs=epochs,
-                                    activation=act,
-                                    optimizer=opt,
-                                    output_size=1,
-                                    dropout_p=dropout_p,
-                                    weight_decay=wd,
-                                    momentum=m,
-                                    sched_ss=20,
-                                    sched_g=0.9
-                                )
-                                hp_space.append(conf)
+                                for d in dropout_p:
+                                    conf = dict(
+                                        hidden_sizes=hs,
+                                        learning_rate=learning_rate[lr_idx],
+                                        batch_size=bs,
+                                        epochs=epochs,
+                                        activation=act,
+                                        optimizer=opt,
+                                        output_size=1,
+                                        dropout_p=d,
+                                        weight_decay=wd,
+                                        momentum=m,
+                                        sched_ss=20,
+                                        sched_g=0.9
+                                    )
+                                    hp_space.append(conf)
 
     print('Number of parameter settings: ', len(hp_space))
     task_arr = np.array_split(hp_space, len(num_of_proc))
