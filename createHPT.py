@@ -5,8 +5,8 @@ from src.helper.pickleLoader import save_object
 
 num_of_proc = [i for i in range(0, 16)]
 
-learning_rate = np.linspace(0.000001, 0.0001, 20)
-batch_size = [64, 128, 256, 512]
+learning_rate = [0.001, 0.0001, 0.00001, 0.000001]
+batch_size = [32, 64, 128, 256, 512]
 
 hidden_sizes = [
     [400],
@@ -19,17 +19,13 @@ hidden_sizes = [
     [250, 150, 75, 50],
     [400, 200, 100, 50, 20],
     [250, 150, 75, 50, 20],
-    [400, 200, 100, 50, 20, 10],
-    [250, 150, 75, 50, 20, 10],
-    [400, 200, 100, 50, 20, 50, 10],
-    [250, 150, 75, 50, 20, 10, 5]
 ]
 epochs = 10
 activation = ['relu', 'tanh', 'sigmoid']
 optimizer = ['sgd', 'adam']
-dropout_p = [0.1, 0.2, 0.3, 0.4]
+dropout_p = [0.2, 0.3, 0.4]
 weight_decay = [0.0001, 0.001, 0.01]
-momentum = [0.1, 0.3, 0.6, 0.9]
+momentum = [0.1, 0.5, 0.9]
 
 
 def create_hpt_space():
