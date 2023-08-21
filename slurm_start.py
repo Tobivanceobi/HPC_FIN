@@ -118,7 +118,7 @@ if not (os.path.isfile(res_path)):
     # Create dataframe with parameters/score columns
     df = pd.DataFrame(
         columns=['MAE score P1', 'MAE score P2', 'loss', 'learning_rate', 'batch_size', 'hidden_sizes', 'epochs',
-                 'activation', 'optimizer', 'early stopping'])
+                 'activation', 'optimizer', 'early stopping', 'dropout', 'momentum', 'weight_decay'])
     df.to_csv(res_path)
 
 hp_space = load_object(f'./hp_params/hptSpace_{pid}')
@@ -187,6 +187,7 @@ for i in range(0, len(hp_space)):
                            str(hyper_param['hidden_sizes']),
                            hyper_param['epochs'],
                            hyper_param['activation'], hyper_param['optimizer'],
-                           fin_trainer.early_stopping.early_stop]
+                           fin_trainer.early_stopping.early_stop, hyper_param['dropout_p'],
+                           hyper_param['momentum'], hyper_param['weight_decay']]
     print(r.loc[len(r.index) - 1])
     r.to_csv(res_path)
