@@ -5,7 +5,7 @@ from src.helper.pickleLoader import save_object
 
 num_of_proc = [i for i in range(0, 16)]
 
-learning_rate = np.linspace(0.0001, 0.01)
+learning_rate = np.linspace(0.0001, 0.01, 5)
 batch_size = [32, 64, 128, 256, 512]
 
 hidden_sizes = [
