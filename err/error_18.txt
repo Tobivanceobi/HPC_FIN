@@ -1,0 +1,2 @@
+rm: cannot remove '/scratch/modelrep/sadiya/students/tobias/data/jobs/*': No such file or directory
+slurmstepd: error: *** JOB 1083870 ON gpu41-008 CANCELLED AT 2023-08-18T14:00:26 ***
