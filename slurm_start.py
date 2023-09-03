@@ -66,7 +66,7 @@ sample_ids = dl.sample_ids
 
 y_stf = [int(age) for age in y_data]
 skf_vals = []
-skf = StratifiedKFold(n_splits=4, random_state=126)
+skf = StratifiedKFold(n_splits=4)
 train_index, test_index = next(iter(skf.split(x_data, y_stf, group)))
 
 x_train, x_test = [x_data[i] for i in train_index], [x_data[i] for i in test_index]
