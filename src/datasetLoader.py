@@ -87,7 +87,8 @@ class DatasetLoader:
         for d in self.cache_data_fname:
             obj = load_object(self.DATA_PATH + d)
             rej_ids.append(obj['rejected_ids'])
-            accepted_ids.append(obj['sample_ids'])
+            samp_ids = np.array([sid for sid in obj['sample_ids'] if sid.split('_')[0] in self.state])
+            accepted_ids.append(samp_ids)
         self.rejected_ids = np.unique(np.concatenate(rej_ids))
         accepted_ids = np.unique(np.concatenate(accepted_ids))
         accepted_ids = np.setdiff1d(accepted_ids, self.rejected_ids)
