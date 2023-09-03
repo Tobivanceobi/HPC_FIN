@@ -18,6 +18,15 @@ class DatasetLoader:
         'beta': [14, 30],
         'whole_spec': [0.5, 30]
     }
+    BAD_SUBJ = [256, 257, 515, 1027, 6, 8, 520, 10, 265, 267, 269, 18, 20, 276, 535, 792, 793, 547, 805, 295, 810, 1072,
+                567,
+                55, 1081, 1085, 575, 582, 326, 77, 84, 341, 343, 601, 351, 1121, 611, 362, 1130, 109, 626, 371, 630,
+                633, 890,
+                636, 895, 1154, 643, 386, 901, 134, 646, 392, 905, 398, 1168, 401, 145, 916, 1177, 411, 1180, 671, 1185,
+                418,
+                930, 934, 1195, 943, 945, 436, 693, 444, 446, 447, 959, 702, 451, 452, 459, 718, 975, 210, 470, 985,
+                986, 222,
+                736, 739, 484, 995, 486, 492, 495, 752, 1010, 1018, 255]
 
     def __init__(
             self,
@@ -87,7 +96,8 @@ class DatasetLoader:
         for d in self.cache_data_fname:
             obj = load_object(self.DATA_PATH + d)
             rej_ids.append(obj['rejected_ids'])
-            samp_ids = np.array([sid for sid in obj['sample_ids'] if sid.split('_')[0] in self.state])
+            samp_ids = np.array([sid for sid in obj['sample_ids'] if sid.split('_')[0] in self.state and
+                                 int(sid.split('_')[1]) not in self.BAD_SUBJ])
             accepted_ids.append(samp_ids)
         self.rejected_ids = np.unique(np.concatenate(rej_ids))
         accepted_ids = np.unique(np.concatenate(accepted_ids))
