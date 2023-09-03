@@ -16,6 +16,6 @@
 source $HOME/miniconda/etc/profile.d/conda.sh
 conda init bash
 conda activate pytorch
-python3 $HOME/tobias_ettling/HPC_FIN/slurm_start.py
+python3 $HOME/tobias_ettling/HPC_FIN/train_single.py
 
 conda deactivate

@@ -16,17 +16,6 @@ from src.network.finNN import FeatureImitationNetwork
 from src.network.utiles import Data, EarlyStopping
 
 
-def check_if_param_used(param, hpt_path):
-    hpt_df = pd.read_csv(hpt_path, index_col=0)
-    condition = (
-            (hpt_df['learning_rate'] == param['learning_rate']) &
-            (hpt_df['batch_size'] == param['batch_size']) &
-            (hpt_df['hidden_sizes'] == str(param['hidden_sizes'])) &
-            (hpt_df['activation'] == param['activation'])
-    ).any()
-    return condition.any()
-
-
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 fb = ['delta', 'theta', 'alpha', 'beta', 'whole_spec']
